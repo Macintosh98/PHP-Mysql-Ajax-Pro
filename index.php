@@ -38,8 +38,8 @@
         $sql = "INSERT INTO employee (E_name,E_mob,E_email,E_pan,E_sal,E_Jdate,E_status) VALUES ('".$Name."', '".$MNumber."', '".$email."','".$pan."', '".$salary."', '".$date."','".$status."')";
         if ( isset( $_GET['ID'] ) ) 
         {
-          $id=$_GET['ID'];
-          $sql = "UPDATE employee SET E_name='".$Name."', E_mob='".$MNumber."', E_email='".$email."' ,E_pan='".$pan."' ,E_sal='".$salary."' ,E_Jdate='".$date."' ,E_status='".$status."' WHERE ID='$id'";
+            $id=$_GET['ID'];
+            $sql = "UPDATE employee SET E_name='".$Name."', E_mob='".$MNumber."', E_email='".$email."' ,E_pan='".$pan."' ,E_sal='".$salary."' ,E_Jdate='".$date."' ,E_status='".$status."' WHERE ID='$id'";
         }
         
         if ($conn->query($sql) === TRUE){
