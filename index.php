@@ -76,8 +76,10 @@
 
   <body>
     <div class="container">
-      <h1>Welcome, to policy planner</h1>
+      <div class="jumbotron text-center">
+      <h1>Welcome To Policy Planner</h1>
       <p>Enter employee details</p>
+      </div>
       <form action="#" method="post">
         <div class="form-group">
               <label>Name:</label>
