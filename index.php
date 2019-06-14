@@ -76,10 +76,32 @@
 
   <body>
     <div class="container">
-      <div class="jumbotron text-center">
+      
+      <div class="jumbotron text-center" style="margin-bottom:0">
       <h1>Welcome To Policy Planner</h1>
       <p>Enter employee details</p>
       </div>
+
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>    
+          </ul>
+        </div>  
+      </nav>
+
       <form action="#" method="post">
         <div class="form-group">
               <label>Name:</label>
@@ -103,6 +125,11 @@
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
         <button class="btn btn-light"><a href="view.php">View</a></button>
       </form> 
+
+      <div class="jumbotron text-center" style="margin-bottom:0">
+        <p>Footer</p>
+      </div>
+
     </div>
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
