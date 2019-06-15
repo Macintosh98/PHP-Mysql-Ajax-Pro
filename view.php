@@ -95,6 +95,7 @@
                                     <button class="btn btn-light edit" data-id="<?php echo $row['ID']; ?>">Edit</button>
                                 </td>
                             </tr>
+        
                             <?php
                         }
                     } 
@@ -137,18 +138,20 @@
                         $('tbody').prepend("<tr id='"+ID+"'><td><input type='text' value='"+ID+"'></td><td><input type='text' value='"+N+"'></td><td><input type='text' value='"+M+"'></td> <td><input type='text' value='"+E+"'></td> <td><input type='text' value='"+P+"'></td> <td><input type='text' value='"+S+"'></td> <td><input type='text' value='"+J+"'></td> <td><input type='text' value='"+St+"'></td> <td><button class='btn btn-light update' data-id='"+ID+"' >Update</button></td></tr>");
                     });
 
-                    $(".update").click(function(){
+                    
+                });
+                $(".update").click(function(){
+                        console.log("innnn");
                         var ID=$(this).attr('data-id');
                         $.ajax({
-                            url: "demo.php",
+                            url : "demo.php",
                             data : {ID:ID},
                             type : 'GET',
-                            success: function(result){
+                            success : function(result){
                                 $("#txt").html(result);
                             }      
                         }); 
                     });
-                });
             </script>        
         </div>
     </body>
