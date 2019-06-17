@@ -115,11 +115,11 @@
                         $('#'+ID).remove();
 
                         $.ajax({
-                            url: "view.php",
+                            url: "demo.php",
                             data : {ID:ID},
-                            type : 'GET',
+                            type : 'POST',
                             success: function(result){
-                                $("#txt").html(result);
+                                location.reload(true);
                             }      
                         });
                     });
@@ -135,23 +135,28 @@
                         var J=$('#'+ID+' #J').text();
                         var St=$('#'+ID+' #St').text();
                         $('#'+ID).remove();
-                        $('tbody').prepend("<tr id='"+ID+"'><td><input type='text' value='"+ID+"'></td><td><input type='text' value='"+N+"'></td><td><input type='text' value='"+M+"'></td> <td><input type='text' value='"+E+"'></td> <td><input type='text' value='"+P+"'></td> <td><input type='text' value='"+S+"'></td> <td><input type='text' value='"+J+"'></td> <td><input type='text' value='"+St+"'></td> <td><button class='btn btn-light update' data-id='"+ID+"' >Update</button></td></tr>");
+                        $('tbody').prepend("<tr id='"+ID+"'><td>"+ID+"</td><td><input type='text' name='N' id='name' value='"+N+"'></td><td><input type='text' name='M' id='mobile' value='"+M+"'></td> <td><input type='text' name='E' id='email' value='"+E+"'></td> <td><input type='text' name='P' id='pan' value='"+P+"'></td> <td><input type='text' name='S' id='salary' value='"+S+"'></td> <td><input type='text' name='J' id='join' value='"+J+"'></td><td>"+St+"</td>  <td><button class='btn btn-light update' data-id='"+ID+"' >Update</button></td></tr>");
                     });
 
-                    
-                });
-                $(".update").click(function(){
-                        console.log("innnn");
+                    $(document).on('click', '.update', function () {
+                    //$(".update").click(function(){
+                        var N = $("#name").val();
+                        var M = $("#mobile").val();
+                        var E = $("#email").val();
+                        var P = $("#pan").val();
+                        var S = $("#salary").val();
+                        var J = $("#join").val();
                         var ID=$(this).attr('data-id');
                         $.ajax({
                             url : "demo.php",
-                            data : {ID:ID},
-                            type : 'GET',
+                            data : {ID:ID,N:N,M:M,E:E,P:P,S:S,J:J,S:S,J:J},
+                            type : 'POST',
                             success : function(result){
-                                $("#txt").html(result);
+                                location.reload(true);
                             }      
                         }); 
                     });
+                });
             </script>        
         </div>
     </body>
