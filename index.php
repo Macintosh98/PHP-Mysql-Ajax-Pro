@@ -15,12 +15,12 @@
     </head>
 
     <body>
-
+          <hr>
           <div class="jumbotron text-center" >
           <h1>Welcome To Policy Planner</h1>
           <p>Insurance made simpler and faster</p>
           </div>
-    
+          <hr>
           <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <a class="navbar-brand" href="#">Navbar</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -41,7 +41,7 @@
             </div> 
             <div><button type="button" class="btn btn-primary"><a class='navbar-brand' href="login.php">Login</a></button></div> 
           </nav>
-
+          <hr>
           <div class="container" style="margin-top:30px;margin-bottom:30px">
             <div class="row">
               <div class="col-sm-4">
@@ -77,11 +77,11 @@
               </div>
             </div>
           </div>        
-
+          <hr>
           <div class="jumbotron text-center">
                 <p>Footer</p>
           </div>
-
+          <hr>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

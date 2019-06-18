@@ -60,7 +60,12 @@
 
     <body>
     <div class="container">
-            <div class="row justify-content-center align-items-center" style="height:100vh">
+        <hr>
+          <div class="jumbotron text-center" >
+          <h1>Login Page</h1>
+          </div>
+        <hr><br><br>
+            <div class="row justify-content-center align-items-center">
                 <div class="col-4">
                     <div class="card">
                         <div class="card-body">
@@ -80,5 +85,5 @@
                 </div>
             </div>
     </div>
-    </body>  
+    </body> 
 </html>
