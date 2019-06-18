@@ -38,6 +38,7 @@
                     $_SESSION["user"] = "2";
                     header("Location: http://localhost/".dirname($_SERVER['PHP_SELF'])."/insert.php");
                 }
+                $_SESSION["username"]=$U;
                 }
                 else
                 {

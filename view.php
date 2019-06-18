@@ -41,41 +41,56 @@ session_start();
                     $username = "root";
                     $password = "";
                     $dbname = "mydata";
-
                     // Create connection
                     $conn = new mysqli($servername, $username, $password, $dbname);
                     // Check connection
                     if ($conn->connect_error) {
                         die("Connection failed: " . $conn->connect_error);
                     }
-                    if($_SESSION['user']=="1"){
-                        $sql = "SELECT * FROM employee";
-                    }else if ($_SESSION['user']=="2"){
-                        $sql = "SELECT * FROM manager";
-                    }
-                    $result = $conn->query($sql);
-                    if ($result->num_rows > 0) {
-                        // output data of each row
-                        while($row = $result->fetch_assoc()) {
-                            //echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-                            ?>
-                            <tr id="<?php echo $row['ID']; ?>">
-                                <td><?php echo $row['ID']; ?></td>
-                                <td id='N' ><?php echo $row['name']; ?></td>
-                                <td id='M' ><?php echo $row['mob']; ?></td>
-                                <td id='E' ><?php echo $row['email']; ?></td>
-                                <td id='P' ><?php echo $row['pan']; ?></td>
-                                <td id='S' ><?php echo $row['sal']; ?></td>
-                                <td id='J' ><?php echo $row['Jdate']; ?></td>
-                                <td id='St' ><?php if($row['status']) echo "Active"; ?></td>
-                                <td>
-                                    <button class="btn btn-light delete" data-id="<?php echo $row['ID']; ?>">Delete</button>
-                                    <button class="btn btn-light edit" data-id="<?php echo $row['ID']; ?>">Edit</button>
-                                </td>
-                            </tr>
-                            <?php
+                    function formtable($sql,$conn)
+                    {
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            // output data of each row
+                            while($row = $result->fetch_assoc()) {
+                                //echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+                                ?>
+                                <tr id="<?php echo $row['ID']; ?>">
+                                    <td><?php echo $row['ID']; ?></td>
+                                    <td id='N' ><?php echo $row['name']; ?></td>
+                                    <td id='M' ><?php echo $row['mob']; ?></td>
+                                    <td id='E' ><?php echo $row['email']; ?></td>
+                                    <td id='P' ><?php echo $row['pan']; ?></td>
+                                    <td id='S' ><?php echo $row['sal']; ?></td>
+                                    <td id='J' ><?php echo $row['Jdate']; ?></td>
+                                    <td id='St' ><?php if($row['status']) echo "Active"; ?></td>
+                                    <td>
+                                        <button class="btn btn-light delete" data-id="<?php echo $row['ID']; ?>">Delete</button>
+                                        <button class="btn btn-light edit" data-id="<?php echo $row['ID']; ?>">Edit</button>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
                         }
                     }
+                    
+                    if($_SESSION['user']=="1"){
+                        $s = "SELECT * FROM employee";
+                        formtable($s,$conn);
+                    }else if ($_SESSION['user']=="2"){
+                        $s = "SELECT * FROM employee";
+                        formtable($s,$conn);
+                        ?> </tbody></table><table class="table table-dark"><tbody> <?php
+                        $s = "SELECT * FROM manager";
+                        formtable($s,$conn);
+                    }else
+                    {
+                        if(isset($_SESSION['username'])){
+                            $un=$_SESSION['username'];
+                            
+                        }
+                    }
+
                     $conn->close();
                     ?>
                 </tbody>
