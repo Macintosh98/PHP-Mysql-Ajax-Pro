@@ -19,22 +19,6 @@ session_start();
     </head>
 
     <body>
-        <script>
-        function ajax(ID) {
-                if (window.XMLHttpRequest) {
-                    xmlhttp = new XMLHttpRequest();
-                } else {
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("txt").innerHTML = this.responseText;
-                    }
-                };
-                xmlhttp.open("GET","view.php?ID="+ID,true);
-                xmlhttp.send();
-        }
-        </script>
         <div class="container" id="txt"> 
             <br><br><h1>Employees From Policy Planner</h1><p>deatails of all employees:</p><br><br>            
             <table class="table table-dark" id="view">
