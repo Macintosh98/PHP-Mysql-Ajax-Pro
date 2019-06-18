@@ -69,7 +69,6 @@ session_start();
                                 <td id='J' ><?php echo $row['Jdate']; ?></td>
                                 <td id='St' ><?php if($row['status']) echo "Active"; ?></td>
                                 <td>
-                                    <?php if($_SESSION['user']=="0"){ ?>
                                     <button class="btn btn-light delete" data-id="<?php echo $row['ID']; ?>">Delete</button>
                                     <button class="btn btn-light edit" data-id="<?php echo $row['ID']; ?>">Edit</button>
                                 </td>
