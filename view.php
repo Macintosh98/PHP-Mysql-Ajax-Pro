@@ -12,6 +12,7 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+        <link rel="stylesheet" href="main.css">
     </head>
 
     <body>
@@ -104,27 +105,30 @@
                     ?>
                 </tbody>
             </table>
+            <div>
+                    <button class='add-row'>Add New Record</button>
+            </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
             <script>
                 $(document).ready(function(){
-                    $(".delete").click(function(){
+                    $(document).on('click', '.delete', function () {
                         var ID=$(this).attr('data-id');
                         $('#'+ID).remove();
 
                         $.ajax({
-                            url: "demo.php",
+                            url: "operation.php",
                             data : {ID:ID},
                             type : 'POST',
                             success: function(result){
-                                location.reload(true);
+                                //location.reload(true);
                             }      
                         });
                     });
 
-                    $(".edit").click(function(){
+                    $(document).on('click', '.edit', function () {
                         $(this).html('Update');
                         var ID=$(this).attr('data-id');
                         var N=$('#'+ID+' #N').text();
@@ -147,14 +151,20 @@
                         var S = $("#salary").val();
                         var J = $("#join").val();
                         var ID=$(this).attr('data-id');
+                        $('#'+ID).remove();
                         $.ajax({
-                            url : "demo.php",
+                            url : "operation.php",
                             data : {ID:ID,N:N,M:M,E:E,P:P,S:S,J:J,S:S,J:J},
                             type : 'POST',
                             success : function(result){
-                                location.reload(true);
+                                //alert(result);
+                                $('tbody').prepend("<tr id='"+ID+"'><td>"+ID+"</td><td>"+N+"</td><td>"+M+"</td> <td>"+E+"</td> <td>"+P+"</td> <td>"+S+"</td> <td>"+J+"</td><td>Active</td>  <td><button class='btn btn-light delete' data-id='"+ID+"' >Delete</button> <button class='btn btn-light edit' data-id='"+ID+"' >Edit</button></td></tr>");
                             }      
                         }); 
+                    });
+
+                    $(".add-row").click(function(){
+                        $("table tbody").append("<tr><td></td><td><input type='text' name='N' id='name' value=''></td><td><input type='text' name='M' id='mobile' value=''></td> <td><input type='text' name='E' id='email' value=''></td> <td><input type='text' name='P' id='pan' value=''></td> <td><input type='text' name='S' id='salary' value=''></td> <td><input type='text' name='J' id='join' value=''></td><td></td>  <td><button class='btn btn-light add' data-id='' >Add</button></td></tr>");
                     });
                 });
             </script>        
