@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -61,22 +64,12 @@
                     if ($conn->connect_error) {
                         die("Connection failed: " . $conn->connect_error);
                     }
-                    
-                    if ( isset( $_GET['ID'] ) ) {
-                        $ID=$_GET['ID'];
-                        $sql = "delete from employee where ID=$ID";
-
-                        if ($conn->query($sql) === TRUE) {
-                            echo "Record deleted successfully";
-                        } else {
-                            echo "Error: " . $sql . "<br>" . $conn->error;
-                        }
+                    if($_SESSION['user']=="0"){
+                        $sql = "SELECT * FROM employee";
+                    }else if ($_SESSION['user']=="1"){
+                        $sql = "SELECT * FROM manager";
                     }
-                    
-
-                    $sql = "SELECT * FROM employee";
                     $result = $conn->query($sql);
-
                     if ($result->num_rows > 0) {
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
@@ -84,23 +77,21 @@
                             ?>
                             <tr id="<?php echo $row['ID']; ?>">
                                 <td><?php echo $row['ID']; ?></td>
-                                <td id='N' ><?php echo $row['E_name']; ?></td>
-                                <td id='M' ><?php echo $row['E_mob']; ?></td>
-                                <td id='E' ><?php echo $row['E_email']; ?></td>
-                                <td id='P' ><?php echo $row['E_pan']; ?></td>
-                                <td id='S' ><?php echo $row['E_sal']; ?></td>
-                                <td id='J' ><?php echo $row['E_Jdate']; ?></td>
-                                <td id='St' ><?php if($row['E_status']) echo "Active"; ?></td>
+                                <td id='N' ><?php echo $row['name']; ?></td>
+                                <td id='M' ><?php echo $row['mob']; ?></td>
+                                <td id='E' ><?php echo $row['email']; ?></td>
+                                <td id='P' ><?php echo $row['pan']; ?></td>
+                                <td id='S' ><?php echo $row['sal']; ?></td>
+                                <td id='J' ><?php echo $row['Jdate']; ?></td>
+                                <td id='St' ><?php if($row['status']) echo "Active"; ?></td>
                                 <td>
                                     <button class="btn btn-light delete" data-id="<?php echo $row['ID']; ?>">Delete</button>
                                     <button class="btn btn-light edit" data-id="<?php echo $row['ID']; ?>">Edit</button>
                                 </td>
                             </tr>
-        
                             <?php
                         }
-                    } 
-                    else { echo "0 results"; }
+                    }
                     $conn->close();
                     ?>
                 </tbody>

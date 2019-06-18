@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,16 +15,13 @@
   </head>
 
   <?php 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "mydata";
-
+    if($_SESSION['user']=="2"){
     if ( isset( $_POST['submit'] ) ) 
     {
-      $username = $_POST['username'];
-      $password = $_POST['password'];
-      $action = $_POST['catagary'];
+        $u = $_POST['username'];
+        $p = $_POST['password'];
+        $a = $_POST['catagary'];
+        
         $Name = $_POST['Name'];
         $MNumber = $_POST['MNumber'];
         $email = $_POST['email'];
@@ -29,7 +29,12 @@
         $salary = $_POST['salary'];
         $date = $_POST['date'];
         $status= 1;
-
+        $temp=0;
+        
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "mydata";
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -37,19 +42,33 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         } 
-            
-        $sql = "INSERT INTO employee (E_name,E_mob,E_email,E_pan,E_sal,E_Jdate,E_status) VALUES ('".$Name."', '".$MNumber."', '".$email."','".$pan."', '".$salary."', '".$date."','".$status."')";
-        if ( isset( $_GET['ID'] ) ) 
-        {
-          $id=$_GET['ID'];
-          $sql = "UPDATE employee SET E_name='".$Name."', E_mob='".$MNumber."', E_email='".$email."' ,E_pan='".$pan."' ,E_sal='".$salary."' ,E_Jdate='".$date."' ,E_status='".$status."' WHERE ID='$id'";
+        if ($a==0){    
+          $sql = "INSERT INTO employee (name,mob,email,pan,sal,Jdate,status) VALUES ('".$Name."', '".$MNumber."', '".$email."','".$pan."', '".$salary."', '".$date."','".$status."')";
+          if ($conn->query($sql) === TRUE){
+            $temp=1;
+          } 
+          else {
+              echo "Error: " . $sql . "<br>" . $conn->error;
+          }
+        }else if($a==1){
+          $sql = "INSERT INTO Manager (name,mob,email,pan,sal,Jdate,status) VALUES ('".$Name."', '".$MNumber."', '".$email."','".$pan."', '".$salary."', '".$date."','".$status."')";
+          if ($conn->query($sql) === TRUE){
+            $temp=1;
+          } 
+          else {
+              echo "Error: " . $sql . "<br>" . $conn->error;
+          }
         }
         
-        if ($conn->query($sql) === TRUE){
-            header("Location: http://localhost/".dirname($_SERVER['PHP_SELF'])."/view.php");
-        } 
-        else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+        if($a==2 || $temp==1)
+        {
+          $sql = "insert into admin values('$u','$p','$a')";
+          if ($conn->query($sql) === TRUE){
+            ?><script>alert("Record Inserted");</script><?php
+          } 
+          else {
+              echo "Error: " . $sql . "<br>" . $conn->error;
+          }
         }
         $conn->close();
     }
@@ -90,7 +109,6 @@
               <br>
         </div>
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-        <button class="btn btn-light"><a href="view.php">View</a></button>
         <hr>
       </form> 
     </div>
@@ -100,4 +118,5 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
+  <?php }else{ ?><script>alert("U R not allowed");</script><?php } ?>
 </html>

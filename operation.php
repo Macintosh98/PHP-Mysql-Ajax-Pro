@@ -1,4 +1,5 @@
 <?php
+session_start();
 $id=$_POST['ID'];
 if ( isset( $_POST['ID'] ) )
 { 
@@ -24,7 +25,11 @@ if ( isset( $_POST['ID'] ) )
         $date = $_POST['J'];
         $status= 1;
 
-        $sql = "UPDATE employee SET E_name='".$Name."', E_mob='".$MNumber."', E_email='".$email."' ,E_pan='".$pan."' ,E_sal='".$salary."' ,E_Jdate='".$date."' ,E_status='".$status."' WHERE ID='$id'";
+        if($_SESSION['user']=="0"){
+            $sql = "UPDATE employee SET name='".$Name."', mob='".$MNumber."', email='".$email."' ,pan='".$pan."' ,sal='".$salary."' ,Jdate='".$date."' ,status='".$status."' WHERE ID='$id'";
+        }else if ($_SESSION['user']=="1"){
+            $sql = "UPDATE manager SET name='".$Name."', mob='".$MNumber."', email='".$email."' ,pan='".$pan."' ,sal='".$salary."' ,Jdate='".$date."' ,status='".$status."' WHERE ID='$id'";
+        }
 
         if ($conn->query($sql) === TRUE){
             echo "Updated Sucssesfully";
@@ -36,13 +41,17 @@ if ( isset( $_POST['ID'] ) )
     }
     else
     {
-        $sql = "delete from employee where ID=$id";
+        if($_SESSION['user']=="0"){
+            $sql = "delete from employee where ID=$id";
+        }else if ($_SESSION['user']=="1"){
+            $sql = "delete from manager where ID=$id";
+        }
 
-                        if ($conn->query($sql) === TRUE) {
-                            echo "Record deleted successfully";
-                        } else {
-                            echo "Error: " . $sql . "<br>" . $conn->error;
-                        }
+        if ($conn->query($sql) === TRUE) {
+            echo "Record deleted successfully";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
     }
 }
 ?>

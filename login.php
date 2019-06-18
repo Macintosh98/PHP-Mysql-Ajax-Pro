@@ -1,17 +1,14 @@
-<!doctype html>
-<html lang="en">
-
-    <?php
-    if(isset($_GET['submit']))
-    if (isset($_GET['username']) && isset($_GET['password']))
+<?php 
+    session_start(); 
+    if(isset($_POST['submit']))
     {
         $servername = "localhost";
         $username = "root";
         $password = "";
         $dbname = "mydata";
 
-        $U=$_GET['username'];
-        $P=$_GET['password'];
+        $U=$_POST['username'];
+        $P=$_POST['password'];
         $A=0;
 
         // Create connection
@@ -21,41 +18,43 @@
             die("Connection failed: " . $conn->connect_error);
         }
         
-            $sql = "select * from admin where username='$username' && password='$password'";
-
+            $sql = "select * from admin where username='$U' && password='$P'";
+            
             if($result=$conn->query($sql))
             {
+                if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $action=$row['action'];
+                
                 if ($action==0){
                     $_SESSION["user"] = "0";
-                    header("Location: http://localhost/".dirname($_SERVER['PHP_SELF'])."/index.php");
+                    header("Location: http://localhost/".dirname($_SERVER['PHP_SELF'])."/view.php");
                 }
-                else if($action=1){
+                else if($action==1){
                     $_SESSION["user"] = "1";
-                    header("Location: http://localhost/".dirname($_SERVER['PHP_SELF'])."/index.php");
+                    header("Location: http://localhost/".dirname($_SERVER['PHP_SELF'])."/view.php");
                 }
-                else{
+                else if($action==2){
                     $_SESSION["user"] = "2";
                     header("Location: http://localhost/".dirname($_SERVER['PHP_SELF'])."/insert.php");
                 }
+                }
+                else
+                {
+                    ?><script>alert("invalid user");</script><?php
+                }
             }
-            else
-            {
-                echo "invalid user";
-            }
-        $conn.close();
-    }    
-    ?>
-
+        $conn->close();
+    }   
+?>
+<!DOCTYPE html>
+<html>
     <head>    
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="main.css">
     </head>
 
@@ -74,18 +73,12 @@
                                     Password:
                                     <input type="password" class="form-control" name="password">
                                 </div>
-                                <input type="submit" value="login" class="btn btn-primary">
+                                <button type="submit" name="submit" class="btn btn-primary">Login</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </body>
-    
+    </body>  
 </html>
