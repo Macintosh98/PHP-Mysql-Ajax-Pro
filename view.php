@@ -48,9 +48,9 @@ session_start();
                     if ($conn->connect_error) {
                         die("Connection failed: " . $conn->connect_error);
                     }
-                    if($_SESSION['user']=="0"){
+                    if($_SESSION['user']=="1"){
                         $sql = "SELECT * FROM employee";
-                    }else if ($_SESSION['user']=="1"){
+                    }else if ($_SESSION['user']=="2"){
                         $sql = "SELECT * FROM manager";
                     }
                     $result = $conn->query($sql);
@@ -69,6 +69,7 @@ session_start();
                                 <td id='J' ><?php echo $row['Jdate']; ?></td>
                                 <td id='St' ><?php if($row['status']) echo "Active"; ?></td>
                                 <td>
+                                    <?php if($_SESSION['user']=="0"){ ?>
                                     <button class="btn btn-light delete" data-id="<?php echo $row['ID']; ?>">Delete</button>
                                     <button class="btn btn-light edit" data-id="<?php echo $row['ID']; ?>">Edit</button>
                                 </td>
@@ -118,7 +119,7 @@ session_start();
                     });
 
                     $(document).on('click', '.update', function () {
-                    //$(".update").click(function(){
+                    //$(".update").click(function(){ not working
                         var N = $("#name").val();
                         var M = $("#mobile").val();
                         var E = $("#email").val();
@@ -132,7 +133,6 @@ session_start();
                             data : {ID:ID,N:N,M:M,E:E,P:P,S:S,J:J,S:S,J:J},
                             type : 'POST',
                             success : function(result){
-                                //alert(result);
                                 $('tbody').prepend("<tr id='"+ID+"'><td>"+ID+"</td><td>"+N+"</td><td>"+M+"</td> <td>"+E+"</td> <td>"+P+"</td> <td>"+S+"</td> <td>"+J+"</td><td>Active</td>  <td><button class='btn btn-light delete' data-id='"+ID+"' >Delete</button> <button class='btn btn-light edit' data-id='"+ID+"' >Edit</button></td></tr>");
                             }      
                         }); 
